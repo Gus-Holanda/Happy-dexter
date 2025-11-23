@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Dexter Style!</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: radial-gradient(circle at top, #330000, #000000); /* fundo escuro sangue */
+        font-family: "Poppins", sans-serif;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    /* TÍTULO Dexter Style */
+    h1 {
+        margin-top: 80px;
+        font-size: 3.8rem;
+        font-weight: 900;
+        letter-spacing: 4px;
+        background: linear-gradient(90deg, #ff0000, #8b0000, #ff2400, #b20000);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        animation: bloodGlitter 2.5s infinite linear;
+        text-shadow: 0 0 15px #8b0000, 0 0 25px #ff0000;
+    }
+
+    @keyframes bloodGlitter {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* BOTÃO PLAY */
+    #startBtn {
+        margin-top: 40px;
+        padding: 18px 36px;
+        background: linear-gradient(90deg, #8b0000, #ff0000);
+        border: none;
+        border-radius: 12px;
+        font-size: 22px;
+        font-weight: bold;
+        box-shadow: 0 0 20px #ff0000;
+        cursor: pointer;
+        transition: 0.3s;
+        color: white;
+    }
+
+    #startBtn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 35px #8b0000;
+    }
+
+    /* VIDEO escondido inicialmente */
+    #videoArea {
+        display: none;
+        margin-top: 40px;
+        animation: fadeIn 1.5s ease forwards;
+    }
+
+    #videoArea video {
+        width: 90vw;
+        max-width: 600px;
+        height: auto;
+        filter: drop-shadow(0 0 20px #8b0000);
+        display: block;
+        margin: 0 auto;
+        border-radius: 8px;
+    }
+
+    /* Partículas sangue */
+    .sparkle {
+        position: fixed;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        opacity: 0.8;
+        pointer-events: none;
+        background: #ff0000;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes sparkleAnim {
+        0% { transform: translateY(0) scale(0); opacity: 0; }
+        50% { transform: translateY(200px) scale(1); opacity: 1; }
+        100% { transform: translateY(400px) scale(0); opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<h1>🔪 Happy Birthday My Amorzito 🔪</h1>
+
+<button id="startBtn">▶ Play</button>
+
+<div id="videoArea">
+    <video id="dexterVideo" loop muted>
+        <source src="doakesvideo.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo.
+    </video>
+</div>
+
+<!-- Dois áudios simultâneos -->
+<audio id="music1" loop>
+    <source src="doakes song.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="music2" loop>
+    <source src="mother.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    const startBtn = document.getElementById("startBtn");
+    const videoArea = document.getElementById("videoArea");
+    const video = document.getElementById("dexterVideo");
+    const music1 = document.getElementById("music1");
+    const music2 = document.getElementById("music2");
+
+    startBtn.addEventListener("click", () => {
+        // Mostra o vídeo
+        videoArea.style.display = "block";
+
+        // Reinicia e toca o vídeo
+        video.currentTime = 0;
+        video.play();
+
+        // Toca os dois áudios
+        music1.volume = 0.6;
+        music2.volume = 0.4;
+        music1.currentTime = 0;
+        music2.currentTime = 0;
+        music1.play();
+        music2.play();
+
+        // Esconde o botão
+        startBtn.style.display = "none";
+
+        // Começa as partículas de sangue
+        startSparkles();
+    });
+
+    function startSparkles() {
+        for(let i = 0; i < 60; i++){
+            let s = document.createElement("div");
+            s.className = "sparkle";
+            s.style.left = Math.random() * 100 + "vw";
+            s.style.top = Math.random() * -200 + "px";
+            s.style.animation = `sparkleAnim 3s ${Math.random()*3}s infinite ease-in-out`;
+            document.body.appendChild(s);
+        }
+    }
+</script>
+
+</body>
+</html>
